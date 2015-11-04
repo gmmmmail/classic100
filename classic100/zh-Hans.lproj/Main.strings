@@ -1,0 +1,30 @@
+
+/* Class = "UILabel"; text = "time off"; ObjectID = "EpW-6f-7m3"; */
+"EpW-6f-7m3.text" = "定时关闭";
+
+/* Class = "UILabel"; text = "00:00"; ObjectID = "GLu-Qc-p6A"; */
+"GLu-Qc-p6A.text" = "00:00";
+
+/* Class = "UILabel"; text = "time off"; ObjectID = "HOd-We-9Ut"; */
+"HOd-We-9Ut.text" = "定时关闭";
+
+/* Class = "UIButton"; normalTitle = "play mode"; ObjectID = "Mdj-Ou-cBT"; */
+"Mdj-Ou-cBT.normalTitle" = "播放模式";
+
+/* Class = "UILabel"; text = "/"; ObjectID = "gRG-OW-fYN"; */
+"gRG-OW-fYN.text" = "/";
+
+/* Class = "UIButton"; normalTitle = "music list"; ObjectID = "hT1-Nj-S7D"; */
+"hT1-Nj-S7D.normalTitle" = "音乐列表";
+
+/* Class = "UIButton"; normalTitle = "download"; ObjectID = "kif-5r-Yuo"; */
+"kif-5r-Yuo.normalTitle" = "下载";
+
+/* Class = "UIButton"; normalTitle = "theme"; ObjectID = "pUg-4r-WB9"; */
+"pUg-4r-WB9.normalTitle" = "主题";
+
+/* Class = "UILabel"; text = "00:00"; ObjectID = "wJI-rl-vZU"; */
+"wJI-rl-vZU.text" = "00:00";
+
+/* Class = "UIButton"; normalTitle = "music collections"; ObjectID = "ybl-iA-jY1"; */
+"ybl-iA-jY1.normalTitle" = "古典音乐收藏集";

@@ -1,0 +1,31 @@
+
+/*
+  Localizable.strings
+  classic100
+
+  Created by lai on 15/4/9.
+  Copyright (c) 2015年 ios. All rights reserved.
+*/
+
+"add to download list" = "添加到下載列表";
+"downloading" = "正在下載";
+"downloaded" = "已經下載";
+"download" = "下載";
+"waiting" = "等待中";
+"delete success" = "刪除成功";
+"delete fail" = "刪除失敗";
+"100 songs" = "100首";
+"play mode" = "播放摸式";
+"list loop" = "列表循環";
+"cancel" = "取消";
+"single loop" = "單曲循環";
+"Shuffle" = "隨機播放";
+"download error" = "下载出错";
+"no dowloaded song" = "沒有下載完成的歌曲";
+"classical music collections" = "古典音樂收藏集";
+"music library" = "音樂庫";
+"theme" = "主題";
+"time off" = "定時關閉";
+"10 minute" = "10分鐘";
+"20 minute" = "20分鐘";
+"30 minute" = "30分鐘";

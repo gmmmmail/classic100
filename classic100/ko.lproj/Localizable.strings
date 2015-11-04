@@ -1,0 +1,29 @@
+
+/*
+ Localizable.strings
+ classic100
+ 
+ Created by lai on 15/4/9.
+ Copyright (c) 2015年 ios. All rights reserved.
+ */
+"add to download list" = "add to download list";
+"downloading" = "downloading";
+"downloaded" = "downloaded";
+"download" = "download";
+"waiting" = "waiting";
+"delete success" = "delete success";
+"delete fail" = "delete fail";
+"100 songs" = "100 songs";
+"play mode" = "play mode";
+"list loop" = "list loop";
+"cancel" = "cancel";
+"single loop" = "single loop";
+"Shuffle" = "Shuffle";
+"no dowloaded song" = "no dowloaded song";
+"classical music collections" = "music collections";
+"music library" = "music library";
+"theme" = "theme";
+"time off" = "time off";
+"10 minute" = "10 minute";
+"20 minute" = "20 minute";
+"30 minute" = "30 minute";

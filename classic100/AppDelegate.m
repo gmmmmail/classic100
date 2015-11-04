@@ -7,39 +7,138 @@
 //
 
 #import "AppDelegate.h"
+#import "UINavigationBar+customBar.h"
+#import "MainViewController.h"
+#import "REFrostedViewController.h"
+#import "MenuViewController.h"
+#import "CustomNavigationController.h"
+#import "MusicViewController.h"
+#import <AVFoundation/AVFoundation.h>
+#import "MobClick.h"
+#import <iAd/iAd.h>
+#import "DownloadManager.h"
+#import "iRate.h"
 
 @interface AppDelegate ()
 
 @end
 
-@implementation AppDelegate
+@implementation AppDelegate{
+    REFrostedViewController *frostedViewController;
+}
 
+
+-(void)done
+{
+    NSString *f = [MobClick getConfigParams:@"appControll2"];
+    if (f) {
+        [DownloadManager writeAppController:f];
+    }
+}
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch.
+    /*
+     设置状态栏:View controller-based status bar appearance:NO
+     http://blog.csdn.net/gaoyp/article/details/18406501
+    */
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+
+    /************* umeng ***************/
+    [MobClick startWithAppkey:@"5527e1b7fd98c5a419000686" reportPolicy:REALTIME   channelId:@"App Store"];
+    NSString *version = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"];
+    [MobClick setAppVersion:version];
+    
+    [MobClick updateOnlineConfig];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(done)
+                                                 name:UMOnlineConfigDidFinishedNotification
+                                               object:nil];
+    
+    /************* rate ***************/
+    [iRate sharedInstance].remindPeriod = 15;
+    
+    
+    NSError* error;
+    [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:&error];
+    
+    MainViewController *mainController = [MainViewController shared];
+    CustomNavigationController *navi = [[CustomNavigationController alloc] initWithRootViewController:mainController];
+    [navi.navigationBar customNavigationBar];
+    
+    MenuViewController *menuController = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateViewControllerWithIdentifier:@"MenuViewController"];
+    
+    frostedViewController = [[REFrostedViewController alloc] initWithContentViewController:navi menuViewController:menuController];
+    frostedViewController.direction = REFrostedViewControllerDirectionLeft;
+    frostedViewController.liveBlurBackgroundStyle = REFrostedViewControllerLiveBackgroundStyleLight;
+    frostedViewController.liveBlur = NO;
+    frostedViewController.backgroundFadeAmount = 0.1;
+    
+    self.window.rootViewController = frostedViewController;
+    
+    [[DBHelper new] copyDBByLanguage];
+//    [[DBHelper new] initDB];
+    
+    [self copyThemeFile];
+    
     return YES;
 }
 
+-(void)copyThemeFile
+{
+    NSString *configPath = [[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject] stringByAppendingPathComponent:@"theme.plist"];
+    if ([[NSFileManager defaultManager] fileExistsAtPath:configPath] == NO) {
+        [[NSFileManager defaultManager] createFileAtPath:configPath contents:[NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"theme" ofType:@"plist"]] attributes:nil];
+        NSError *error = nil;
+        [[NSURL fileURLWithPath:configPath] setResourceValue: [NSNumber numberWithBool: YES]
+                                                      forKey: NSURLIsExcludedFromBackupKey error: &error];
+    }
+}
+
+
+
+// 繁体、简体不同数据库
+-(void)copyDBByLanguage
+{
+    //之前版本
+    NSString *documentDirectory =[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
+    NSString *dbFilePath = [documentDirectory stringByAppendingPathComponent:@"music.db"];
+    
+    
+    if (![[NSFileManager defaultManager] fileExistsAtPath:dbFilePath]) {
+        NSString *resourceDBPath;
+        
+        NSArray *languages = [NSLocale preferredLanguages];
+        NSString *currentLanguage = [languages objectAtIndex:0];
+        if ([currentLanguage isEqualToString:@"zh-Hant"]) {
+            resourceDBPath = [[NSBundle mainBundle] pathForResource:@"music_fan" ofType:@"db"];
+        }else{
+           resourceDBPath = [[NSBundle mainBundle] pathForResource:@"music" ofType:@"db"];
+        }
+        
+        NSData *data = [NSData dataWithContentsOfFile:resourceDBPath];
+        [[NSFileManager defaultManager] createFileAtPath:dbFilePath contents:data attributes:nil];
+        NSError *error = nil;
+        [[NSURL fileURLWithPath:dbFilePath] setResourceValue: [NSNumber numberWithBool: YES]
+                                                                   forKey: NSURLIsExcludedFromBackupKey error: &error];
+        if (error) {
+            NSLog(@"error->%@",error);
+        }
+    };
+}
+
 - (void)applicationWillResignActive:(UIApplication *)application {
-    // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
-    // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
-    // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
-    // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
-    // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
-    // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
-    // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
 
 @end
